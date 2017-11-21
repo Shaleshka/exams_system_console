@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.company.data.Data.USERSTORAGE_FILENAME;
+
 public class UserStorage extends Storage {
 
     private List<TeacherUser> teacherUsers;
 
     public UserStorage() {
-        super("auth.cfg");
+        super(USERSTORAGE_FILENAME);
         teacherUsers = new ArrayList<>();
     }
 

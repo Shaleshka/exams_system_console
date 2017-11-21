@@ -2,7 +2,7 @@ package com.company.utils;
 
 import com.company.data.Data;
 import com.company.entities.TeacherUser;
-import com.company.menu.StudentsMenu;
+import com.company.menu.EnrolleeMenu;
 import com.company.menu.TeacherMenu;
 
 import java.util.Objects;
@@ -39,7 +39,7 @@ public class AuthorizationHandler {
         System.out.println("Введите своё имя: ");
         if (scanner.hasNextLine()) {
             String name = scanner.nextLine();
-            new StudentsMenu(name);
+            new EnrolleeMenu(name);
             return true;
         }
         return false;

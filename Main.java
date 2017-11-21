@@ -8,7 +8,7 @@ import com.company.utils.FileWorker;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.company.data.Data.scanner;
+import static com.company.data.Data.*;
 
 public class Main {
 
@@ -27,7 +27,7 @@ public class Main {
         list.add(new TeacherUser("petrov@bsuir.by", "123456"));
         list.add(new TeacherUser("alexeev@bsuir.by", "654321"));
         list.add(new TeacherUser("smirnov@bsuir.by", "987654"));
-        worker.writeObject("auth.cfg", list);
+        worker.writeObject(USERSTORAGE_FILENAME, list);
         List<Faculty> faculties = new ArrayList<>();
         Faculty fkp = new Faculty("ФКП", "petrov@bsuir.by", 20);
         fkp.addExam(new Exam("Математика", "Продифференцировать константу и дважды транспонировать матрицу"));
@@ -42,65 +42,63 @@ public class Main {
         faculties.add(fkp);
         faculties.add(ksis);
         faculties.add(fre);
-        worker.writeObject("faculties.cfg", faculties);
+        worker.writeObject(FACULTIES_FILENAME, faculties);
 
-        List<Student> students = new ArrayList<>();
-        Student student1 = new Student("Валерий Смирнов", "ФКП");
-        student1.addAnswer(new Answer("Математика", "Очень смешно) 0, та же матрица"));
-        student1.addAnswer(new Answer("Физика", "p=mv; gh=1/2*v^2; v = sqrt(2gh) ~ 9 м/с, " +
+        List<Enrollee> enrollees = new ArrayList<>();
+        Enrollee enrollee1 = new Enrollee("Валерий Смирнов", "ФКП");
+        enrollee1.addAnswer(new Answer("Математика", "Очень смешно) 0, та же матрица"));
+        enrollee1.addAnswer(new Answer("Физика", "p=mv; gh=1/2*v^2; v = sqrt(2gh) ~ 9 м/с, " +
                 "тогда импульс примерно 4.5кг*м/с"));
-        Student student2 = new Student("Алексей Федотов", "ФКП");
-        student2.addAnswer(new Answer("Математика", "Производная константы 0, матрица не изменится"));
-        student2.addAnswer(new Answer("Физика", "p=mv; gh=1/2*v^2; v = sqrt(2gh) ~ 9 м/с, " +
+        Enrollee enrollee2 = new Enrollee("Алексей Федотов", "ФКП");
+        enrollee2.addAnswer(new Answer("Математика", "Производная константы 0, матрица не изменится"));
+        enrollee2.addAnswer(new Answer("Физика", "p=mv; gh=1/2*v^2; v = sqrt(2gh) ~ 9 м/с, " +
                 "тогда импульс примерно 4.5кг*м/с"));
 
-        Student student3 = new Student("Павел Бизулин", "КСИС");
-        student3.addAnswer(new Answer("Математика", "Функцией многих переменных называется закон, по " +
+        Enrollee enrollee3 = new Enrollee("Павел Бизулин", "КСИС");
+        enrollee3.addAnswer(new Answer("Математика", "Функцией многих переменных называется закон, по " +
                 "которому каждому из значений независимых переменных  (аргументов) из области определения соответствует " +
                 "значение зависимой переменной  (функции)."));
-        student3.addAnswer(new Answer("Информатика", "геометрический (рисунки, схемы, диаграммы), " +
+        enrollee3.addAnswer(new Answer("Информатика", "геометрический (рисунки, схемы, диаграммы), " +
                 "простое перечисление вершин и ребер, табличный"));
 
-        Student student4 = new Student("Михаил Иванов", "КСИС");
-        student4.addAnswer(new Answer("Математика", "ФМП - закон, по " +
+        Enrollee enrollee4 = new Enrollee("Михаил Иванов", "КСИС");
+        enrollee4.addAnswer(new Answer("Математика", "ФМП - закон, по " +
                 "которому каждому из значений независимых переменных  (аргументов) из области определения соответствует " +
                 "значение зависимой переменной  (функции)."));
-        student4.addAnswer(new Answer("Информатика", "перечисление всех рёбер, таблица смежности" +
+        enrollee4.addAnswer(new Answer("Информатика", "перечисление всех рёбер, таблица смежности" +
                 ", таблица инцидентности, др"));
 
-        Student student5 = new Student("Алекснадр Петров", "ФРЭ");
-        student5.addAnswer(new Answer("Физика", "Полупроводники — материалы, по своей удельной " +
+        Enrollee enrollee5 = new Enrollee("Алекснадр Петров", "ФРЭ");
+        enrollee5.addAnswer(new Answer("Физика", "Полупроводники — материалы, по своей удельной " +
                 "проводимости занимающие промежуточное место между " +
                 "проводниками и диэлектриками, и отличающиеся от проводников сильной зависимостью удельной проводимости" +
                 " от концентрации примесей, температуры и воздействия различных видов излучения."));
-        student5.addAnswer(new Answer("Радиоэлектроника", "Принцип работы транзисторного усилителя " +
+        enrollee5.addAnswer(new Answer("Радиоэлектроника", "Принцип работы транзисторного усилителя " +
                 "основан на том, что с помощью небольших изменений напряжения или тока во входной цепи транзистора можно " +
                 "получить значительно большие изменения напряжения или тока в его выходной цепи."));
 
-        Student student6 = new Student("Вадим Днищенко", "ФРЭ");
-        student6.addAnswer(new Answer("Физика", "Полупроводник — это кристаллический материал, " +
+        Enrollee enrollee6 = new Enrollee("Вадим Днищенко", "ФРЭ");
+        enrollee6.addAnswer(new Answer("Физика", "Полупроводник — это кристаллический материал, " +
                 "который проводит электричество не столь хорошо, как металлы."));
-        student6.addAnswer(new Answer("Радиоэлектроника", "Усилитель осуществляет увеличение энергии " +
+        enrollee6.addAnswer(new Answer("Радиоэлектроника", "Усилитель осуществляет увеличение энергии " +
                 "управляющего сигнала за счет энергии вспомогательного источника. Входной сигнал является как бы " +
                 "шаблоном, в соответствии с которым регулируется поступление энергии от источника к потребителю " +
                 "усиленного сигнала"));
 
-        students.add(student1);
-        students.add(student2);
-        students.add(student3);
-        students.add(student4);
-        students.add(student5);
-        students.add(student6);
+        enrollees.add(enrollee1);
+        enrollees.add(enrollee2);
+        enrollees.add(enrollee3);
+        enrollees.add(enrollee4);
+        enrollees.add(enrollee5);
+        enrollees.add(enrollee6);
 
-        worker.writeObject("students.cfg", students);
+        worker.writeObject(ENROLLEE_FILENAME, enrollees);
 
     }
 
     public static void main(String[] args) {
 
         System.out.println("Система Вступительные экзамены");
-
-        //writeExampleInfo();
 
         try {
             new Data();

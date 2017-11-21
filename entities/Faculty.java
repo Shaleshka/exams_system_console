@@ -12,7 +12,7 @@ public class Faculty implements Serializable {
     private String name;
     private String teacherUsername;
     private List<Exam> exams;
-    private List<Student> enrolled;
+    private List<Enrollee> enrolled;
 
     public Faculty(String name, String teacherUsername, int amount) {
         this.name = name;
@@ -50,13 +50,13 @@ public class Faculty implements Serializable {
         exams.add(exam);
     }
 
-    //accepts list of all students who passed exams on this faculty
-    public void enroll(List<Student> students) {
-        students.sort(Comparator.comparingDouble(Student::getAvg).reversed());
-        enrolled = students.stream().limit(amount).collect(Collectors.toList());
+    //accepts list of all enrollees who passed exams on this faculty
+    public void enroll(List<Enrollee> enrollees) {
+        enrollees.sort(Comparator.comparingDouble(Enrollee::getAvg).reversed());
+        enrolled = enrollees.stream().limit(amount).collect(Collectors.toList());
     }
 
-    public List<Student> getEnrolled() {
+    public List<Enrollee> getEnrolled() {
         return enrolled;
     }
 

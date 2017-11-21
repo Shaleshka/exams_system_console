@@ -1,21 +1,21 @@
 package com.company.menu;
 
 import com.company.entities.Answer;
+import com.company.entities.Enrollee;
 import com.company.entities.Exam;
 import com.company.entities.Faculty;
-import com.company.entities.Student;
 
 import java.util.List;
 
 import static com.company.data.Data.*;
 
-public class StudentsMenu {
+public class EnrolleeMenu {
 
     private final String name;
 
-    public StudentsMenu(String name) {
+    public EnrolleeMenu(String name) {
         this.name = name;
-        if (studentsStorage.getByName(name) != null) {
+        if (enrolleeStorage.getByName(name) != null) {
             System.out.println("Такой студент уже есть!");
             //maybe show info about
             return;
@@ -46,7 +46,7 @@ public class StudentsMenu {
     }
 
     private void passExams(Faculty faculty) {
-        Student student = new Student(name, faculty.getName());
+        Enrollee enrollee = new Enrollee(name, faculty.getName());
         List<Exam> examList = faculty.getExams();
         System.out.println("Приступим к сдаче экзаменов");
         for (Exam exam : examList) {
@@ -55,13 +55,13 @@ public class StudentsMenu {
             System.out.println("Введите ваш ответ: ");
             if (scanner.hasNextLine()) {
                 String answer = scanner.nextLine();
-                student.addAnswer(new Answer(exam.getName(), answer));
+                enrollee.addAnswer(new Answer(exam.getName(), answer));
             }
             System.out.println("Ответ принят");
         }
         System.out.println("Все экзамены пройдены! Ожидайте информации о зачислении");
-        studentsStorage.addStudent(student);
-        studentsStorage.rewrite();
+        enrolleeStorage.addStudent(enrollee);
+        enrolleeStorage.rewrite();
     }
 
 }

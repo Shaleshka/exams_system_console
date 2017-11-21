@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student implements Serializable {
+public class Enrollee implements Serializable {
 
     private final List<Answer> answers;
     private String name;
     private String facultyName;
     private double avg;
 
-    public Student(String name, String facultyName) {
+    public Enrollee(String name, String facultyName) {
         this.name = name;
         this.facultyName = facultyName;
         answers = new ArrayList<>();
@@ -54,9 +54,9 @@ public class Student implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Student student = (Student) o;
+        Enrollee enrollee = (Enrollee) o;
 
-        return (name != null ? name.equals(student.name) : student.name == null) && (facultyName != null ? facultyName.equals(student.facultyName) : student.facultyName == null);
+        return (name != null ? name.equals(enrollee.name) : enrollee.name == null) && (facultyName != null ? facultyName.equals(enrollee.facultyName) : enrollee.facultyName == null);
     }
 
     @Override

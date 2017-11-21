@@ -7,12 +7,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.company.data.Data.FACULTIES_FILENAME;
+
 public class FacultyStorage extends Storage {
 
     private List<Faculty> faculties;
 
     public FacultyStorage() {
-        super("faculties.cfg");
+        super(FACULTIES_FILENAME);
         faculties = new ArrayList<>();
     }
 
