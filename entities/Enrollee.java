@@ -10,11 +10,13 @@ public class Enrollee implements Serializable {
     private String name;
     private String facultyName;
     private double avg;
+    private boolean enrolled;
 
     public Enrollee(String name, String facultyName) {
         this.name = name;
         this.facultyName = facultyName;
         answers = new ArrayList<>();
+        enrolled = false;
     }
 
     public String getName() {
@@ -43,6 +45,18 @@ public class Enrollee implements Serializable {
 
     public void refreshAvg() {
         avg = (double) answers.stream().mapToInt(Answer::getScore).sum() / (double) answers.size();
+    }
+
+    public void setAvg(double avg) {
+        this.avg = avg;
+    }
+
+    public boolean isEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(boolean enrolled) {
+        this.enrolled = enrolled;
     }
 
     public double getAvg() {

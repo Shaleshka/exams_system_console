@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.company.data.Data.*;
+import static com.company.data.Data.facultyStorage;
+import static com.company.data.Data.scanner;
 
 public class TeacherMenu {
 
@@ -21,7 +22,9 @@ public class TeacherMenu {
         while (true) {
             printMenu();
             if (scanner.hasNextInt()) {
-                int k = Integer.parseInt(scanner.nextLine());
+                String s = scanner.nextLine();
+                if (Objects.equals(s, "")) s = "0";
+                int k = Integer.parseInt(s);
                 switch (k) {
                     case 1: {
                         printExams();
@@ -79,14 +82,18 @@ public class TeacherMenu {
         enrollee.refreshAvg();
     }
 
+    private List<Enrollee> getUnchecked() {
+        //get all students from all faculties assigned to a teacher which have at least one exam scored -1
+        return facultyStorage.getAll().stream().
+                filter(faculty -> Objects.equals(faculty.getTeacherUsername(), teacherUsername)).flatMap(faculty -> faculty.getEnrollees().stream()
+                .filter(enrollee -> enrollee.getAnswers().stream().filter(answer -> answer.getScore() == -1)
+                        .findFirst().orElse(null) != null)).collect(Collectors.toList());
+    }
+
     private void printExams() {
         //finding all students who have at least one not scored answer and facultyName matches one of faculties names for
         //our current teacher
-        List<Enrollee> unchecked = enrolleeStorage.getAll().stream().filter(student -> (student.getAnswers().stream().filter(answer -> answer.getScore() == -1)
-                .findFirst().orElse(null) != null
-                && facultyStorage.getByTeacher(teacherUsername).stream()
-                .filter(faculty -> Objects.equals(faculty.getName(), student.getFacultyName()))
-                .findFirst().orElse(null) != null)).collect(Collectors.toList());
+        List<Enrollee> unchecked = getUnchecked();
         while (unchecked.size() > 0) {
             System.out.println("Выберите студента");
             System.out.println("0. Выход");
@@ -96,7 +103,7 @@ public class TeacherMenu {
                 int k = Integer.parseInt(scanner.nextLine());
                 if (k == 0) {
                     System.out.println("Обязательно зайдите позже, чтобы проверить оставшихся студентов");
-                    enrolleeStorage.rewrite();
+                    facultyStorage.rewrite();
                     return;
                 }
                 try {
@@ -107,13 +114,9 @@ public class TeacherMenu {
             } else {
                 System.out.println("Вы не ввели число!");
             }
-            unchecked = enrolleeStorage.getAll().stream().filter(student -> (student.getAnswers().stream().filter(answer -> answer.getScore() == -1)
-                    .findFirst().orElse(null) != null
-                    && facultyStorage.getByTeacher(teacherUsername).stream()
-                    .filter(faculty -> Objects.equals(faculty.getName(), student.getFacultyName()))
-                    .findFirst().orElse(null) != null)).collect(Collectors.toList());
+            unchecked = getUnchecked();
         }
-        enrolleeStorage.rewrite();
+        facultyStorage.rewrite();
         System.out.println("Все студенты уже проверены. Можно выводить список зачисленных");
     }
 
@@ -122,9 +125,7 @@ public class TeacherMenu {
             System.out.println("Факультет " + faculty.getName());
             //refreshing
             //passing only students who doesn't have -1 score (e.g. unchecked exams)
-            faculty.enroll(enrolleeStorage.getByFacultyName(faculty.getName()).stream().filter(
-                    student -> student.getAnswers().stream().filter(answer -> answer.getScore() == -1)
-                            .findFirst().orElse(null) == null).collect(Collectors.toList()));
+            faculty.enroll();
             System.out.println("Всего мест: " + faculty.getAmount());
             System.out.println("Всего зачислено: " + faculty.getEnrolled().size());
             for (Enrollee enrollee : faculty.getEnrolled()) {
@@ -132,7 +133,7 @@ public class TeacherMenu {
             }
 
         }
-        enrolleeStorage.rewrite();
+        facultyStorage.rewrite();
     }
 
 }

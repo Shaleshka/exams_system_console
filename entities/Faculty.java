@@ -12,14 +12,14 @@ public class Faculty implements Serializable {
     private String name;
     private String teacherUsername;
     private List<Exam> exams;
-    private List<Enrollee> enrolled;
+    private List<Enrollee> enrollees;
 
     public Faculty(String name, String teacherUsername, int amount) {
         this.name = name;
         this.teacherUsername = teacherUsername;
         this.amount = amount;
         exams = new ArrayList<>();
-        enrolled = new ArrayList<>();
+        enrollees = new ArrayList<>();
     }
 
     public String getName() {
@@ -50,14 +50,26 @@ public class Faculty implements Serializable {
         exams.add(exam);
     }
 
-    //accepts list of all enrollees who passed exams on this faculty
-    public void enroll(List<Enrollee> enrollees) {
+    public void enroll() {
+        enrollees.forEach(enrollee -> enrollee.setEnrolled(false));
         enrollees.sort(Comparator.comparingDouble(Enrollee::getAvg).reversed());
-        enrolled = enrollees.stream().limit(amount).collect(Collectors.toList());
+        enrollees.stream().filter(enrollee -> enrollee.getAvg() > 4).limit(amount).forEach(enrollee -> enrollee.setEnrolled(true));
+    }
+
+    public List<Enrollee> getEnrollees() {
+        return enrollees;
+    }
+
+    public void setEnrollees(List<Enrollee> enrollees) {
+        this.enrollees = enrollees;
     }
 
     public List<Enrollee> getEnrolled() {
-        return enrolled;
+        return enrollees.stream().filter(Enrollee::isEnrolled).collect(Collectors.toList());
+    }
+
+    public void registerEnrollee(Enrollee enrollee) {
+        enrollees.add(enrollee);
     }
 
     public int getAmount() {

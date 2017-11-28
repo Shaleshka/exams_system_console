@@ -1,9 +1,6 @@
 package com.company.utils;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class FileWorker {
 
@@ -14,7 +11,7 @@ public class FileWorker {
             serial.writeObject(object);
             serial.flush();
             serial.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.out.println("Ошибка при работе с файловой системой");
             ex.printStackTrace();
         }

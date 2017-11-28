@@ -4,7 +4,7 @@ import java.util.List;
 
 import static com.company.data.Data.fileWorker;
 
-public class Storage {
+public abstract class Storage {
 
     private final String filename;
 
@@ -12,9 +12,7 @@ public class Storage {
         this.filename = filename;
     }
 
-    public List getAll() {
-        return null;
-    }
+    public abstract List getAll();
 
     public void rewrite() {
         fileWorker.writeObject(filename, getAll());

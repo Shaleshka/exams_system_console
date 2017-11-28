@@ -7,7 +7,8 @@ import com.company.entities.Faculty;
 
 import java.util.List;
 
-import static com.company.data.Data.*;
+import static com.company.data.Data.facultyStorage;
+import static com.company.data.Data.scanner;
 
 public class EnrolleeMenu {
 
@@ -15,11 +16,6 @@ public class EnrolleeMenu {
 
     public EnrolleeMenu(String name) {
         this.name = name;
-        if (enrolleeStorage.getByName(name) != null) {
-            System.out.println("Такой студент уже есть!");
-            //maybe show info about
-            return;
-        }
         boolean state = false;
         while (!state) {
             System.out.println("Выберите факультет, на который хотите зарегистрироваться");
@@ -60,8 +56,8 @@ public class EnrolleeMenu {
             System.out.println("Ответ принят");
         }
         System.out.println("Все экзамены пройдены! Ожидайте информации о зачислении");
-        enrolleeStorage.addStudent(enrollee);
-        enrolleeStorage.rewrite();
+        faculty.registerEnrollee(enrollee);
+        facultyStorage.rewrite();
     }
 
 }

@@ -42,7 +42,6 @@ public class Main {
         faculties.add(fkp);
         faculties.add(ksis);
         faculties.add(fre);
-        worker.writeObject(FACULTIES_FILENAME, faculties);
 
         List<Enrollee> enrollees = new ArrayList<>();
         Enrollee enrollee1 = new Enrollee("Валерий Смирнов", "ФКП");
@@ -85,20 +84,22 @@ public class Main {
                 "шаблоном, в соответствии с которым регулируется поступление энергии от источника к потребителю " +
                 "усиленного сигнала"));
 
-        enrollees.add(enrollee1);
-        enrollees.add(enrollee2);
-        enrollees.add(enrollee3);
-        enrollees.add(enrollee4);
-        enrollees.add(enrollee5);
-        enrollees.add(enrollee6);
+        fkp.registerEnrollee(enrollee1);
+        fkp.registerEnrollee(enrollee2);
+        fre.registerEnrollee(enrollee3);
+        fre.registerEnrollee(enrollee4);
+        ksis.registerEnrollee(enrollee5);
+        ksis.registerEnrollee(enrollee6);
 
-        worker.writeObject(ENROLLEE_FILENAME, enrollees);
+        worker.writeObject(FACULTIES_FILENAME, faculties);
 
     }
 
     public static void main(String[] args) {
 
         System.out.println("Система Вступительные экзамены");
+
+        writeExampleInfo();
 
         try {
             new Data();
